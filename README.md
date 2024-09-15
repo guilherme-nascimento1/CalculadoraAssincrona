@@ -3,6 +3,21 @@
 <head>
 <body>
 
+
+<h1>Imagens e GIFs do Google Drive</h1>
+
+<div class="container">
+    <img src="https://drive.google.com/uc?export=view&id=1D_0smPui3biK1rdQABVmrIWSHCqp6li6" alt="Imagem 1">
+    <img src="https://drive.google.com/uc?export=view&id=1n6d7-aJ9oCUs7fzyxOD_pO5kESbSbIHi" alt="Imagem 2">
+    <img src="https://drive.google.com/uc?export=view&id=1Krflf5PJI3NnyjbNYFEtj8V5mfA7tqoL" alt="Imagem 3">
+    <img src="https://drive.google.com/uc?export=view&id=11kyI9rzK3he7aVXFNnJ5916iYaYzidce" alt="Imagem 4">
+    <img src="https://drive.google.com/uc?export=view&id=1_QKolfb4IQozF3nOYEeRDtaH0m4Mv4uk" alt="Imagem 5">
+</div>
+
+<h2>GIF</h2>
+<img src="https://drive.google.com/uc?export=view&id=1xrZAgYnTpVQ8g9HXczJLX_UtiuN9k1Gv" alt="GIF">
+
+
 <h1>Calculadora Assíncrona</h1>
 
 <p>Este projeto é uma aplicação de <strong>calculadora assíncrona</strong>, onde o objetivo principal é demonstrar o fluxo de processamento assíncrono de dados, utilizando <strong>RabbitMQ</strong> para mensageria, <strong>MongoDB</strong> como banco de dados, e uma arquitetura distribuída com <strong>Node.js</strong>, <strong>C#</strong> e <strong>Angular</strong>.</p>

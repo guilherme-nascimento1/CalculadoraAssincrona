@@ -1,182 +1,164 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>README - Calculadora Assíncrona</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-        h2, h3 {
-            color: #1e88e5;
-        }
-        h2 {
-            border-bottom: 2px solid #1e88e5;
-            padding-bottom: 5px;
-            margin-top: 30px;
-        }
-        h3 {
-            margin-top: 20px;
-        }
-        p, ul, ol {
-            margin-bottom: 20px;
-        }
-        ul {
-            list-style-type: disc;
-            margin-left: 20px;
-        }
-        ol {
-            list-style-type: decimal;
-            margin-left: 20px;
-        }
-        pre {
-            background-color: #e8f0fe;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-        code {
-            background-color: #e8e8e8;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-        a {
-            color: #1e88e5;
-        }
-        img {
-            max-width: 100%;
-            margin: 20px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        .highlight {
-            background-color: #e1f5fe;
-            padding: 10px;
-            border-left: 4px solid #1e88e5;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
+## Sobre o Projeto
 
-<h2>Sobre o Projeto</h2>
-<p>Este projeto é uma aplicação de <strong>calculadora assíncrona</strong>. O objetivo é demonstrar um fluxo de processamento assíncrono utilizando o <strong>RabbitMQ</strong> para mensageria, <strong>MongoDB</strong> como banco de dados, e uma arquitetura distribuída que separa as responsabilidades entre os serviços.</p>
+### Tecnologias Utilizadas:
 
-<h3>Tecnologias Utilizadas:</h3>
-<ul>
-    <li><strong>Node.js</strong>: Para construir a API de backend.</li>
-    <li><strong>Angular</strong>: Para o desenvolvimento do frontend.</li>
-    <li><strong>C#</strong>: Utilizado no Worker para consumir e processar as mensagens da fila do RabbitMQ.</li>
-    <li><strong>MongoDB</strong>: Banco de dados NoSQL para armazenar os cálculos.</li>
-    <li><strong>RabbitMQ</strong>: Sistema de mensageria para processamento assíncrono.</li>
-    <li><strong>Docker</strong>: Utilizado para containerizar os serviços, facilitando o setup e a execução do projeto. (Apenas para MongoDB e RabbitMQ)</li>
-</ul>
+- **Node.js**: Para construir a API de backend.
+- **Angular**: Para o desenvolvimento do frontend.
+- **C#**: Linguagem utilizada no Worker para consumir e processar as mensagens da fila do RabbitMQ.
+- **MongoDB**: Banco de dados NoSQL para armazenar os cálculos.
+- **RabbitMQ**: Sistema de mensageria que possibilita o processamento assíncrono.
+- **Docker**: Utilizado para containerizar os serviços, facilitando o setup e a execução do projeto em ambientes controlados. (Apenas para o MONGODB e RABBITMQ)
 
-<h3>Fluxo de Funcionamento:</h3>
-<ol>
-    <li><strong>Frontend (Angular)</strong>: O usuário interage com o frontend, enviando dois números através de um formulário.</li>
-    <li><strong>API (Node.js)</strong>: A API recebe os números, armazena-os no <strong>MongoDB</strong> e envia uma mensagem para o <strong>RabbitMQ</strong>.</li>
-    <li><strong>RabbitMQ</strong>: A fila do RabbitMQ gerencia a comunicação entre a API e o Worker.</li>
-    <li><strong>Worker (C#)</strong>: O Worker consome a mensagem da fila, processa o cálculo e atualiza o status no <strong>MongoDB</strong>.</li>
-    <li><strong>MongoDB</strong>: Armazena o status e resultado final do cálculo.</li>
-</ol>
 
-<!-- Adicione a URL da imagem quando disponível -->
-<img src="URL_DA_IMAGEM" alt="Fluxo de funcionamento da aplicação">
+Este projeto é uma aplicação de **calculadora assincrona**. O objetivo do projeto é demonstrar um fluxo de processamento assíncrono de dados, utilizando o **RabbitMQ** para mensageria, o **MongoDB** como banco de dados e uma arquitetura distribuída que permite a separação de responsabilidades entre os serviços.
 
-<h3>Explicação para rodar o projeto</h3>
+### Fluxo de Funcionamento:
 
-<div class="highlight">
-<p>Segue as instruções para rodar cada parte do projeto.</p>
-</div>
+1. **Frontend (Angular)**: O usuário interage com o frontend, enviando dois números através de um formulário. Esses números são enviados para a API em **Node.js**.
+   
+2. **API (Node.js)**: A API recebe os números enviados pelo frontend, armazena os dados no **MongoDB** com um status inicial de "pending" e, em seguida, envia uma mensagem para o **RabbitMQ**, onde os dados serão processados de forma assíncrona.
 
-<h3>1. Instalação e configuração do Backend (Node.js)</h3>
+3. **RabbitMQ**: A fila do RabbitMQ é responsável por gerenciar a comunicação entre a API e o Worker. A API publica o ID do cálculo na fila para ser processado posteriormente.
 
-<h4>Docker</h4>
-<p>Estou utilizando o MongoDB e o RabbitMQ no Docker, então é possível rodar o comando <code>docker-compose build</code> para iniciar os containers.</p>
+4. **Worker (C#)**: O Worker, desenvolvido em **C#**, consome a fila do RabbitMQ, recupera os dados do cálculo no MongoDB, processa a operação (neste caso, somente a soma), e atualiza o status do cálculo para "done" junto com o resultado final.
 
-<pre><code>
-1. Clone o repositório:
-   git clone https://github.com/guilherme-nascimento1/CalculadoraAssincrona.git
+5. **MongoDB**: O MongoDB é o banco de dados utilizado para armazenar tanto o cálculo enviado quanto o status de processamento e o resultado final.
 
-2. Acesse a pasta da API:
-   cd seu-repositorio/api
 
-3. Instale as dependências:
-   npm install
+## Explicação para rodar o projeto
 
-4. Crie o arquivo .env:
-   MONGO_URL='mongodb://127.0.0.1:27017/calculator'
-   RABBITMQ_URL='amqp://localhost'
 
-5. Compile o TypeScript:
-   npm run build
 
-6. Inicie a API:
-   npm run start
-</code></pre>
+### 1. **Instalação e configuração do Backend (Node.js)**
 
-<p>A API estará disponível em <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>.</p>
+## Docker
+ - Estou utilizando o mongodb e o rabbitmq no docker, então é possivel rodar o comando docker-compose build, para iniciar os containers.
 
-<h3>2. Instalação e configuração do Frontend (Angular)</h3>
+1. **Clone o repositório**:
+   - Comece clonando o repositório para a sua máquina local:
+     ```bash
+     git clone https://github.com/guilherme-nascimento1/CalculadoraAssincrona.git
+     ```
 
-<pre><code>
-1. Acesse a pasta do Frontend:
-   cd ../frontend-angular
+2. **Acesse a pasta da API**:
+   - Entre na pasta **api**:
+     ```bash
+     cd seu-repositorio/api
+     ```
 
-2. Instale as dependências:
-   npm install
+3. **Instale as dependências**:
+   - Instale todas as dependências necessárias para a API:
+     ```bash
+     npm install
+     ```
 
-3. Inicie o servidor Angular:
-   ng serve
-</code></pre>
+4. **Crie o arquivo `.env`**:
+   - Crie um arquivo **.env** com as variáveis de ambiente necessárias. Exemplo:
+     ```bash
+     MONGO_URL='mongodb://127.0.0.1:27017/calculator'
+     RABBITMQ_URL='amqp://localhost'
+     ```
 
-<p>O frontend estará disponível em <a href="http://localhost:4200" target="_blank">http://localhost:4200</a>.</p>
+5. **Compile o TypeScript**:
+   - Compile o código TypeScript para JavaScript:
+     ```bash
+     npm run build
+     ```
 
-<h3>3. Instalação e configuração do Worker (C#)</h3>
+6. **Inicie a API**:
+   - Para iniciar a API e deixá-la rodando, execute o comando:
+     ```bash
+     npm run start
+     ```
 
-<pre><code>
-1. Acesse a pasta do Worker:
-   cd ../worker-csharp
+A API estará disponível em [http://localhost:3000](http://localhost:3000).
 
-2. Compile o Worker:
-   dotnet build
+---
 
-3. Inicie o Worker:
-   dotnet run
-</code></pre>
+### 2. **Instalação e configuração do Frontend (Angular)**
 
-<h3>4. Rodando com Docker (opcional)</h3>
+1. **Acesse a pasta do Frontend**:
+   - Saia da pasta **api** e entre na pasta **frontend-angular**:
+     ```bash
+     cd ../frontend-angular
+     ```
 
-<pre><code>
-1. Verifique se o Docker está instalado:
-   Certifique-se de que você tem o Docker e o Docker Compose instalados na sua máquina.
+2. **Instale as dependências**:
+   - Instale todas as dependências necessárias para o frontend:
+     ```bash
+     npm install
+     ```
 
-2. Acesse a raiz do projeto:
-   cd seu-repositorio
+3. **Inicie o servidor Angular**:
+   - Para rodar o frontend Angular, execute o comando:
+     ```bash
+     ng serve
+     ```
 
-3. Inicie todos os serviços com Docker Compose:
-   docker-compose up --build
-</code></pre>
+O frontend estará disponível em [http://localhost:4200](http://localhost:4200).
 
-<h3>5. Testando a aplicação</h3>
+---
 
-<p>Agora que você tem todos os serviços rodando, você pode testar a aplicação seguindo o fluxo abaixo:</p>
+### 3. **Instalação e configuração do Worker (C#)**
 
-<ol>
-    <li>Acesse o Frontend: Abra o navegador e vá para <a href="http://localhost:4200" target="_blank">http://localhost:4200</a>. Preencha o formulário com dois números e envie o cálculo.</li>
-    <li>A API em <strong>Node.js</strong> receberá os números, armazenará no <strong>MongoDB</strong> com status "pending" e enfileirará uma mensagem para o <strong>RabbitMQ</strong>.</li>
-    <li>O Worker em <strong>C#</strong> consumirá a mensagem, processará o cálculo (soma dos dois números) e atualizará o resultado no <strong>MongoDB</strong> com o status "done".</li>
-    <li>Verifique o resultado no frontend quando o cálculo for processado pelo Worker e o MongoDB for atualizado.</li>
-</ol>
+1. **Acesse a pasta do Worker**:
+   - Saia da pasta **frontend-angular** e entre na pasta **worker-csharp**:
+     ```bash
+     cd ../worker-csharp
+     ```
 
-<!-- Adicione a URL da imagem quando disponível -->
-<img src="URL_DA_IMAGEM_TESTE" alt="Teste da aplicação">
+2. **Compile o Worker**:
+   - Compile o projeto C# com o seguinte comando:
+     ```bash
+     dotnet build
+     ```
 
-</body>
-</html>
+3. **Inicie o Worker**:
+   - Para iniciar o Worker e deixá-lo consumindo mensagens do RabbitMQ, execute o comando:
+     ```bash
+     dotnet run
+     ```
+
+---
+
+### 4. **Rodando com Docker (opcional)**
+
+Se preferir rodar todo o projeto com **Docker**, siga os passos abaixo:
+
+1. **Verifique se o Docker está instalado**:
+   - Certifique-se de que você tem o **Docker** e o **Docker Compose** instalados na sua máquina.
+
+2. **Acesse a raiz do projeto**:
+   - Acesse a pasta raiz do projeto:
+     ```bash
+     cd seu-repositorio
+     ```
+
+3. **Inicie todos os serviços com Docker Compose**:
+   - Execute o seguinte comando para subir os containers do **Node.js**, **Angular**, **Worker C#**, **MongoDB** e **RabbitMQ**:
+     ```bash
+     docker-compose up --build
+     ```
+
+O Docker Compose irá subir todos os serviços de uma vez só. Certifique-se de que as portas necessárias (3000, 4200, etc.) estejam disponíveis.
+
+---
+
+### 5. **Testando a aplicação**
+
+Agora que você tem todos os serviços rodando, você pode testar a aplicação. Aqui está o fluxo básico:
+
+1. **Acesse o Frontend**:
+   - Abra o navegador e vá para [http://localhost:4200](http://localhost:4200).
+   - Preencha o formulário com dois números e envie o cálculo.
+
+2. **API em Node.js**:
+   - A API em **Node.js** irá receber os números, armazená-los no **MongoDB** com o status "pending", e então enfileirar uma mensagem para o **RabbitMQ**.
+
+3. **Worker C#**:
+   - O Worker, rodando em **C#**, irá consumir a mensagem da fila no RabbitMQ, processar o cálculo (neste caso, a soma dos dois números), e atualizar o resultado no **MongoDB** com o status "done".
+
+4. **Verifique o resultado**:
+   - O resultado será exibido no frontend quando o cálculo for processado pelo Worker e o MongoDB for atualizado.
+---
+

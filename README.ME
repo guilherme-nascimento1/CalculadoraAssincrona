@@ -1,28 +1,23 @@
-## Sobre o Projeto
+Calculadora Assíncrona
+Este projeto é uma aplicação de calculadora assíncrona, onde o objetivo principal é demonstrar o fluxo de processamento assíncrono de dados, utilizando RabbitMQ para mensageria, MongoDB como banco de dados e uma arquitetura distribuída com Node.js, C#, e Angular.
 
-### Tecnologias Utilizadas:
+🛠️ Tecnologias Utilizadas
+Node.js: API de backend.
+Angular: Frontend.
+C#: Worker para consumir e processar mensagens da fila do RabbitMQ.
+MongoDB: Banco de dados NoSQL para armazenar cálculos.
+RabbitMQ: Mensageria para processamento assíncrono.
+Docker: Containerização de serviços para simplificar o setup. Utilizado para o MongoDB e RabbitMQ.
+🚀 Fluxo de Funcionamento
+Frontend (Angular): O usuário interage com o frontend e envia dois números através de um formulário. Os dados são enviados para a API em Node.js.
 
-- **Node.js**: Para construir a API de backend.
-- **Angular**: Para o desenvolvimento do frontend.
-- **C#**: Linguagem utilizada no Worker para consumir e processar as mensagens da fila do RabbitMQ.
-- **MongoDB**: Banco de dados NoSQL para armazenar os cálculos.
-- **RabbitMQ**: Sistema de mensageria que possibilita o processamento assíncrono.
-- **Docker**: Utilizado para containerizar os serviços, facilitando o setup e a execução do projeto em ambientes controlados. (Apenas para o MONGODB e RABBITMQ)
+API (Node.js): A API recebe os números, armazena no MongoDB com status "pending", e envia uma mensagem para o RabbitMQ para processamento assíncrono.
 
+RabbitMQ: A fila do RabbitMQ gerencia a comunicação entre a API e o Worker. A API publica o ID do cálculo na fila.
 
-Este projeto é uma aplicação de **calculadora assincrona**. O objetivo do projeto é demonstrar um fluxo de processamento assíncrono de dados, utilizando o **RabbitMQ** para mensageria, o **MongoDB** como banco de dados e uma arquitetura distribuída que permite a separação de responsabilidades entre os serviços.
+Worker (C#): O Worker consome a fila, busca os dados no MongoDB, processa a operação (soma dos números) e atualiza o status para "done" junto com o resultado final.
 
-### Fluxo de Funcionamento:
-
-<p> 1. **Frontend (Angular)**: O usuário interage com o frontend, enviando dois números através de um formulário. Esses números são enviados para a API em **Node.js**. </p>
-   
-2. **API (Node.js)**: A API recebe os números enviados pelo frontend, armazena os dados no **MongoDB** com um status inicial de "pending" e, em seguida, envia uma mensagem para o **RabbitMQ**, onde os dados serão processados de forma assíncrona.
-
-3. **RabbitMQ**: A fila do RabbitMQ é responsável por gerenciar a comunicação entre a API e o Worker. A API publica o ID do cálculo na fila para ser processado posteriormente.
-
-4. **Worker (C#)**: O Worker, desenvolvido em **C#**, consome a fila do RabbitMQ, recupera os dados do cálculo no MongoDB, processa a operação (neste caso, somente a soma), e atualiza o status do cálculo para "done" junto com o resultado final.
-
-5. **MongoDB**: O MongoDB é o banco de dados utilizado para armazenar tanto o cálculo enviado quanto o status de processamento e o resultado final.
+MongoDB: Armazena tanto o cálculo quanto o status de processamento e o resultado final.
 
 
 ## Explicação para rodar o projeto

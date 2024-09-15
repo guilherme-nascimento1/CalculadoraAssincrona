@@ -1,0 +1,16 @@
+<div>
+  <h1>Calculadora de Soma</h1>
+  <input [(ngModel)]="number1" placeholder="Número 1" type="number">
+  <input [(ngModel)]="number2" placeholder="Número 2" type="number">
+
+  <button (click)="sendNumbers()">Calcular</button>
+
+  <div *ngIf="statusMessage" style="margin-top: 20px;">
+    <p>Status: {{ statusMessage }}</p>
+  </div>
+
+  <div *ngIf="result !== null">
+    <h3>Resultado:</h3>
+    <input type="text" [value]="result" readonly>
+  </div>
+</div>

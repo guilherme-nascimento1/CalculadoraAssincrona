@@ -1,0 +1,64 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - backend-network
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend-network
+
+  # api:
+  #   build: ./api
+  #   container_name: api-calculadora
+  #   volumes:
+  #     - ./api:/app
+  #   ports:
+  #     - "3000:3000"          
+  #   depends_on:
+  #     - mongo
+  #     - rabbitmq
+  #   environment:
+  #     - MONGO_URL=mongodb://mongo:27017/calculator
+  #     - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+  #   networks:
+  #     - backend-network
+
+  # frontend:
+  #   build: ./frontend-angular
+  #   container_name: frontend
+  #   ports:
+  #     - "4200:4200"  
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - backend-network
+
+  # worker:
+  #   build: ./worker
+  #   container_name: worker
+  #   depends_on:
+  #     - rabbitmq
+  #     - mongo
+  #   environment:
+  #     - MONGO_URL=mongodb://mongo:27017/calculator
+  #     - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+  #   networks:
+  #     - backend-network
+
+volumes:
+  mongo-data:
+
+networks:
+  backend-network:
+    driver: bridge

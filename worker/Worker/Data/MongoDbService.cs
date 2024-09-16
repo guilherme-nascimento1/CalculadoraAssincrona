@@ -29,8 +29,7 @@ public class MongoDbService {
             return null;
         }
     }
-
-    // Atualiza o cálculo apenas com base no Id
+    
     public void UpdateCalculation(string id, int result) {
         try {
             var update = Builders<Calculation>.Update

@@ -61,23 +61,23 @@ export class CalculatorComponent {
 
             if (res.status === 'done') {
               console.log('Resultado final armazenado:', res.result);
-              this.result = res.result;  // Atualiza o resultado
-              this.statusMessage = 'Cálculo concluído!';  // Atualiza o status para concluído
-              this.stopCheckingResult();  // Para o intervalo
+              this.result = res.result;
+              this.statusMessage = 'Cálculo concluído!';
+              this.stopCheckingResult();
             } else {
-              this.statusMessage = `Status de cálculo: ${res.status}`;  // Atualiza o status para o valor atual
+              this.statusMessage = `Status de cálculo: ${res.status}`;
               console.log('Status de cálculo (não é done):', res.status);
             }
           },
           error: (error) => {
             console.error('Erro ao buscar o resultado:', error);
-            this.statusMessage = 'Erro ao buscar o resultado.';  // Atualiza o status em caso de erro
+            this.statusMessage = 'Erro ao buscar o resultado.';
           }
         });
     });
   }
 
-  // Método para parar o intervalo de checagem
+
   private stopCheckingResult(): void {
     if (this.calculationSubscription) {
       this.calculationSubscription.unsubscribe();
@@ -85,12 +85,12 @@ export class CalculatorComponent {
     }
   }
 
-  // Método para resetar os dados
+
   reset(): void {
     this.number1 = 0;
     this.number2 = 0;
     this.result = null;
-    this.statusMessage = null;  // Reseta a mensagem de status
+    this.statusMessage = null;
     this.stopCheckingResult();
   }
 }

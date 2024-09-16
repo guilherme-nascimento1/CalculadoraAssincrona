@@ -4,7 +4,7 @@
 <body>
 
 
-<h1>Imagens e GIFs do Google Drive</h1>
+<h1>Imagens e GIFs do Projeto</h1>
 
 <div class="container">
     <img src="https://drive.google.com/uc?export=view&id=1D_0smPui3biK1rdQABVmrIWSHCqp6li6" alt="Imagem 1">

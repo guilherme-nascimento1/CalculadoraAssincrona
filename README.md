@@ -114,20 +114,6 @@ RABBITMQ_URL='amqp://localhost'
     </li>
 </ol>
 
-<hr>
-
-<h3>4. Rodando com Docker (Opcional)</h3>
-<ol>
-    <li><strong>Verifique se o Docker está instalado</strong>.</li>
-    <li><strong>Acesse a raiz do projeto:</strong>
-        <pre><code>cd seu-repositorio</code></pre>
-    </li>
-    <li><strong>Inicie todos os serviços com Docker Compose:</strong>
-        <pre><code>docker-compose up --build</code></pre>
-    </li>
-</ol>
-
-<hr>
 
 <h3>5. Testando a Aplicação</h3>
 <ol>
